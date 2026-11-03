@@ -86,7 +86,7 @@ O APK de desenvolvimento fica em `app/build/outputs/apk/debug/`. O CI compila e 
 
 O projeto Firebase configurado é `rbw-one`; o app Android registrado usa `br.com.rbwone.web`. Baixe `google-services.json` nas configurações desse aplicativo e salve-o em `app/google-services.json`. O arquivo de configuração não contém chave privada, mas permanece fora do Git para separar os ambientes. O plugin Google Services só é aplicado quando esse arquivo existe. Sem o arquivo, o site continua funcionando e a ponte retorna `configured: false` / `config_missing`.
 
-O servidor precisa de credencial FCM HTTP v1 com permissão de envio no projeto. Essa credencial é exclusiva do backend: não entra no APK, no JavaScript, neste repositório ou em variáveis `BuildConfig`. A chave publicável do Supabase presente no aplicativo é pública e não substitui a autenticação `x-rbw-session`.
+O servidor precisa de credencial FCM HTTP v1 com permissão de envio no projeto. Essa credencial é exclusiva do backend: não entra no APK, no JavaScript, neste repositório ou em variáveis `BuildConfig`. A chave pública do backend Ubuntu/env3 presente no aplicativo é pública e não substitui a autenticação `x-rbw-session`.
 
 Após abrir o app, faça login no RBW One e use o botão de permitir notificações na central. No Android 13+, a solicitação do sistema só ocorre por essa ação. Permissões negadas podem ser alteradas nas configurações do Android. Dispositivos sem Google Play Services/FCM não recebem push por essa implementação; a central do site permanece disponível.
 
@@ -199,7 +199,7 @@ obrigatória de pacote, tamanho, hash e certificado instalado em toda atualizaç
 A configuração pública Firebase existente foi reconstruída dos recursos do APK
 1.0.12, preservando projeto, App ID, remetente FCM e API key pública. Ela permanece
 fora do Git e foi incluída no backup criptografado da assinatura. Nenhuma
-credencial privilegiada, função Supabase ou webhook foi alterado.
+credencial privilegiada, função do backend ou webhook foi alterado.
 
 Material privado no Linux: ~/.local/share/rbw-one/android-signing/production-20261020/
 (diretórios 0700, arquivos privados 0600). Inclui keystore PKCS12, credenciais,

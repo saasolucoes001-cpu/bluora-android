@@ -1,5 +1,12 @@
 # Homologação WebView — 1.0.10
 
+> **Contexto atual — 03/11/2026:** a operação do RBW One usa o servidor Ubuntu,
+> contêiner LXC **env3**, em `https://db.rbwone.com.br`, e o portal próprio de prévia/publicação.
+> Menções a hospedagem, editor ou publicação nas plataformas anteriores são registros
+> históricos e não devem orientar novas implantações. Nomes de SDKs, protocolos,
+> caminhos e identificadores técnicos são preservados enquanto necessários à compatibilidade.
+> Consulte a [orientação atual](../README.md) antes de executar procedimentos operacionais.
+
 ## Impressão em popup e Epson — 29/09/2026
 
 - Na 1.0.9, Gerar Assinatura → Imprimir abria a janela nativa, mas Imprimir / Salvar PDF não acionava o serviço Android. A espera por `onPageFinished` mantinha o pedido pendente.

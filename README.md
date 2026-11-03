@@ -11,7 +11,7 @@ O botão atual do RBW One usa [download.html](download.html), que consulta [web-
 ### Atualização 1.0.15 — backend Linux
 
 A versão publicada usa `https://db.rbwone.com.br/functions/v1/notifications-api`,
-no backend do contêiner 3, e a chave pública `anon` correspondente. O registro
+no backend Ubuntu, contêiner LXC `env3`, e a chave pública `anon` correspondente. O registro
 nativo de notificações usa `rbw_notifications_linux_v1`, preservando as
 preferências criptografadas anteriores da nuvem sem reutilizá-las no Linux.
 
@@ -87,7 +87,8 @@ Não substituir um APK já publicado por outro conteúdo com o mesmo nome. Mudan
 ## Modo de manutenção compartilhado
 
 O modo de manutenção é controlado no site `gestaoemp`, em **Meu perfil → Modo
-de manutenção**, por usuários Admin. O estado fica no mesmo Supabase do app.
+de manutenção**, por usuários Admin. O estado fica no backend Ubuntu/env3 do RBW One,
+em `https://db.rbwone.com.br`.
 Como a WebView carrega `https://rbwone.com.br`, ela recebe a mesma tela de
 indisponibilidade após a publicação do frontend, sem novo APK. Usuários comuns
 ficam bloqueados; o login permanece acessível para Admins poderem desativar a
