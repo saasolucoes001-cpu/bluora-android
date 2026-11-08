@@ -39,10 +39,10 @@ async function openPage({ manifest = release, failed = false, offline = false, i
 test('APK payload matches release size, SHA-256 and unique first-party path', async () => {
   const url = new URL(release.apkUrl);
   assert.equal(url.origin, origin);
-  assert.equal(url.pathname, '/rbw-one-android/rbw-one-web-1.5.22.apk');
+  assert.equal(url.pathname, '/rbw-one-android/rbw-one-web-1.5.23.apk');
   assert.equal(release.packageName, 'br.com.rbwone.web');
-  assert.equal(release.versionCode, 19);
-  assert.equal(release.versionName, '1.5.22');
+  assert.equal(release.versionCode, 20);
+  assert.equal(release.versionName, '1.5.23');
   assert.equal(release.signingGeneration, 2);
   assert.equal(release.signingCertificateSha256, '51bdd94625966be272b47ab53f1c797ef66d83cc7784737e9c1f89af1a1b8d08');
   const apk = await readFile(new URL(url.pathname.split('/').at(-1), root));

@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
   "packageName": "br.com.rbwone.web",
-  "versionCode": 19,
-  "versionName": "1.5.22",
-  "apkUrl": "https://saasolucoes001-cpu.github.io/rbw-one-android/rbw-one-web-1.5.22.apk",
-  "sha256": "fc344562ff1db75418f63d0d437ad888e45361ba1503b4dff6a1a45618961389",
-  "sizeBytes": 4232744,
+  "versionCode": 20,
+  "versionName": "1.5.23",
+  "apkUrl": "https://saasolucoes001-cpu.github.io/rbw-one-android/rbw-one-web-1.5.23.apk",
+  "sha256": "e2322546cd8cc9b703021e9b8d1624e289b62f248107a7078c410d1a84ff97c8",
+  "sizeBytes": 4232755,
   "minSdkVersion": 23,
-  "notice": "Versão unificada 1.5.22 para Windows, Linux e Android. Mesma interface oficial e backend Linux. Atualize sem desinstalar nem limpar dados. Compatível com assinatura geração 2 (1.0.13 ou posterior).",
+  "notice": "Versão unificada 1.5.23 para Windows, Linux e Android. Mesma interface oficial e backend Linux. Atualize sem desinstalar nem limpar dados. Compatível com assinatura geração 2 (1.0.13 ou posterior).",
   "signingGeneration": 2,
   "signingCertificateSha256": "51bdd94625966be272b47ab53f1c797ef66d83cc7784737e9c1f89af1a1b8d08"
 }
