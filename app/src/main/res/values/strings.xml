@@ -4,4 +4,17 @@
     <string name="retry">Tentar novamente</string>
     <string name="print_document">Imprimir / Salvar PDF</string>
     <string name="close_document">Fechar</string>
+    <string name="incoming_title">Chamada recebida — RBW One</string>
+    <string name="incoming_private">Ligação no seu ramal</string>
+    <string name="incoming_answer">Atender</string>
+    <string name="incoming_reject">Recusar</string>
+    <string name="incoming_unlock">Desbloqueie o celular para continuar.</string>
+    <string name="incoming_unlock_wait">Aguardando o desbloqueio do celular…</string>
+    <string name="incoming_choose">Escolha Atender ou Recusar.</string>
+    <string name="incoming_open_failed">Não foi possível abrir o atendimento.</string>
+    <string name="incoming_permission_notice">Permita a tela de chamadas para receber o atendimento na tela bloqueada. Com o celular em uso, o Android pode mostrar um aviso no topo.</string>
+    <string name="incoming_permission_button">Habilitar tela de chamadas</string>
+    <string name="incoming_permission_unavailable">Abra as configurações do Android para permitir a tela de chamadas do RBW One.</string>
+    <string name="incoming_channel_notice">O canal Chamadas no RBW One precisa permitir avisos prioritários para destacar o atendimento. Você decide essa preferência nas configurações do Android.</string>
+    <string name="incoming_channel_button">Configurar avisos de chamadas</string>
 </resources>

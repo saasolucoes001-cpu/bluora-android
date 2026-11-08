@@ -1,3 +1,7 @@
+# Versão unificada 1.5.22 / código 19
+
+Mantém o pacote br.com.rbwone.web e a assinatura geração 2. Carrega a mesma interface de produção dos clientes Windows/Linux. Preserva as melhorias nativas de chamadas já preparadas. Atualize sem desinstalar nem limpar dados. Testes automatizados, lint e assinatura aprovados; homologação gráfica/FCM em aparelho físico permanece pendente.
+
 # Backend Linux — 1.0.15 / código 17
 
 O canal atual é `web-v2-latest.json`. A API nativa de notificações aponta para

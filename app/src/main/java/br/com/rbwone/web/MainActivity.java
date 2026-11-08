@@ -3,6 +3,7 @@ package br.com.rbwone.web;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.KeyguardManager;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -51,6 +52,9 @@ public final class MainActivity extends Activity {
     private static final int NOTIFICATION_PERMISSION = 101, WEB_PERMISSION = 102, LOCATION_PERMISSION = 103, FILE_PICKER = 104;
     private WebView web;
     private LinearLayout errorPanel;
+    private LinearLayout callScreenNotice;
+    private TextView callScreenMessage;
+    private Button callScreenConfigure;
     private NotificationCoordinator coordinator;
     private JavaScriptReplyProxy replyProxy;
     private JavaScriptReplyProxy phoneReplyProxy;
@@ -83,7 +87,7 @@ public final class MainActivity extends Activity {
         downloads = new WebDownloads(this);
         printing = new WebPrinting(this);
         coordinator = ((RbwApplication) getApplication()).notifications();
-        phoneCalls = new PhoneCallAlerts(this);
+        phoneCalls = ((RbwApplication) getApplication()).createPhoneCallsForMain();
         coordinator.addListener(statusListener);
         WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
         LinearLayout root = new LinearLayout(this); root.setOrientation(LinearLayout.VERTICAL); root.setBackgroundColor(Color.WHITE);
@@ -102,6 +106,7 @@ public final class MainActivity extends Activity {
         errorPanel = new LinearLayout(this); errorPanel.setOrientation(LinearLayout.VERTICAL); errorPanel.setPadding(24, 24, 24, 24); errorPanel.setVisibility(View.GONE);
         TextView failure = new TextView(this); failure.setText(R.string.load_failed); errorPanel.addView(failure);
         Button retry = new Button(this); retry.setText(R.string.retry); retry.setOnClickListener(view -> { errorPanel.setVisibility(View.GONE); web.reload(); }); errorPanel.addView(retry); root.addView(errorPanel);
+        addCallScreenNotice(root);
         web = new WebView(this); web.setId(View.generateViewId()); root.addView(web, new LinearLayout.LayoutParams(-1, 0, 1)); setContentView(root);
         WebSettings settings = web.getSettings(); settings.setJavaScriptEnabled(true); settings.setDomStorageEnabled(true);
         settings.setAllowFileAccess(false); settings.setAllowContentAccess(false); settings.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);
@@ -220,17 +225,52 @@ public final class MainActivity extends Activity {
         dispatchPhoneAction();
     }
     private void dispatchPhoneAction() {
-        if (!resumed || destroyed || pendingPhoneAction == null || phoneReplyProxy == null || !officialPage()
+        if (!resumed || destroyed || keyguardLocked() || pendingPhoneAction == null || phoneReplyProxy == null || !officialPage()
                 || !WebViewFeature.isFeatureSupported(WebViewFeature.WEB_MESSAGE_LISTENER)) return;
         PhoneCallState.Action action = pendingPhoneAction;
-        if (!phoneCalls.isOwner(action.ownerKey)) { pendingPhoneAction = null; return; }
+        if (!phoneCalls.isActionCurrent(action)) { pendingPhoneAction = null; return; }
         try {
             phoneReplyProxy.postMessage(new JSONObject().put("event", "callAction").put("action", action.action)
                     .put("ownerKey", action.ownerKey).put("callId", action.callId).toString());
+            phoneCalls.completeAction(action);
             pendingPhoneAction = null;
         } catch (Exception ignored) { /* The pending action remains local until this live document is ready. */ }
     }
 
+    private boolean keyguardLocked() {
+        KeyguardManager keyguard = getSystemService(KeyguardManager.class);
+        return keyguard == null || keyguard.isKeyguardLocked();
+    }
+    private void addCallScreenNotice(LinearLayout parent) {
+        if (Build.VERSION.SDK_INT < 26) return;
+        callScreenNotice = new LinearLayout(this); callScreenNotice.setOrientation(LinearLayout.VERTICAL);
+        callScreenNotice.setPadding(16, 8, 16, 8); callScreenNotice.setBackgroundColor(0xfffff2c6);
+        callScreenMessage = new TextView(this); callScreenMessage.setTextSize(12); callScreenNotice.addView(callScreenMessage);
+        callScreenConfigure = new Button(this); callScreenConfigure.setAllCaps(false);
+        callScreenConfigure.setOnClickListener(view -> {
+            if (!resumed || destroyed || phoneCalls == null) return;
+            Intent settings;
+            if (Build.VERSION.SDK_INT >= 26 && !phoneCalls.priorityChannelEnabled()) {
+                settings = new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS)
+                        .putExtra(Settings.EXTRA_APP_PACKAGE, getPackageName())
+                        .putExtra(Settings.EXTRA_CHANNEL_ID, PhoneCallAlerts.CHANNEL);
+            } else if (Build.VERSION.SDK_INT >= 34 && !phoneCalls.fullScreenAllowed()) {
+                settings = new Intent(Settings.ACTION_MANAGE_APP_USE_FULL_SCREEN_INTENT)
+                        .setData(Uri.parse("package:" + getPackageName()));
+            } else return;
+            try { startActivity(settings); }
+            catch (ActivityNotFoundException unavailable) { Toast.makeText(this, R.string.incoming_permission_unavailable, Toast.LENGTH_LONG).show(); }
+        });
+        callScreenNotice.addView(callScreenConfigure); parent.addView(callScreenNotice); refreshCallScreenNotice();
+    }
+    private void refreshCallScreenNotice() {
+        if (callScreenNotice == null || phoneCalls == null) return;
+        boolean channelPriority = phoneCalls.priorityChannelEnabled();
+        boolean fullScreen = phoneCalls.fullScreenAllowed();
+        callScreenNotice.setVisibility(!channelPriority || !fullScreen ? View.VISIBLE : View.GONE);
+        callScreenMessage.setText(channelPriority ? R.string.incoming_permission_notice : R.string.incoming_channel_notice);
+        callScreenConfigure.setText(channelPriority ? R.string.incoming_permission_button : R.string.incoming_channel_button);
+    }
     private void addNotice(LinearLayout parent, String text) { TextView notice = new TextView(this); notice.setPadding(16, 12, 16, 12); notice.setText(text); notice.setBackgroundColor(0xfffff2c6); parent.addView(notice); }
     private boolean officialPage() { return web != null && RoutePolicy.officialOrigin(web.getUrl()); }
     private boolean hasPermission(String permission) { return ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED; }
@@ -393,7 +433,8 @@ public final class MainActivity extends Activity {
     }
     @Override protected void onStart() { super.onStart(); if (updater != null) updater.check(); }
     @Override protected void onStop() { if (updater != null) updater.pause(); super.onStop(); }
-    @Override protected void onResume() { super.onResume(); resumed = true; if (phoneCalls != null) phoneCalls.setForeground(true); if (updater != null) updater.resume(); if (coordinator != null) { coordinator.emit(); if (askingNotifications) { finishNotificationPermission(); finishPhonePermission(); } } maybeRefreshNotificationLease(); dispatchPhoneAction(); }
+    @Override protected void onResume() { super.onResume(); resumed = true; if (phoneCalls != null) phoneCalls.setForeground(true); if (updater != null) updater.resume(); if (coordinator != null) { coordinator.emit(); if (askingNotifications) { finishNotificationPermission(); finishPhonePermission(); } } maybeRefreshNotificationLease(); refreshCallScreenNotice(); dispatchPhoneAction(); }
+    @Override public void onWindowFocusChanged(boolean focus) { super.onWindowFocusChanged(focus); if (focus) { refreshCallScreenNotice(); dispatchPhoneAction(); } }
     @Override protected void onPause() { resumed = false; if (phoneCalls != null) phoneCalls.setForeground(false); super.onPause(); }
     @Override protected void onSaveInstanceState(Bundle state) { web.saveState(state); super.onSaveInstanceState(state); }
     @Override public void onBackPressed() { if (web != null && web.canGoBack()) web.goBack(); else super.onBackPressed(); }

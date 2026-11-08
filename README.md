@@ -1,3 +1,7 @@
+# Versão unificada 1.5.22 / código 19
+
+Mantém o pacote br.com.rbwone.web e a assinatura geração 2. Carrega a mesma interface de produção dos clientes Windows/Linux. Preserva as melhorias nativas de chamadas já preparadas. Atualize sem desinstalar nem limpar dados. Testes automatizados, lint e assinatura aprovados; homologação gráfica/FCM em aparelho físico permanece pendente.
+
 # RBW One — canal Android
 
 Canal independente de distribuição de APKs: https://saasolucoes001-cpu.github.io/rbw-one-android/
