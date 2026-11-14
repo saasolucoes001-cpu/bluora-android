@@ -1,3 +1,15 @@
+# Bluora — desenvolvimento Android
+
+Migração de repositórios em 14/11/2026: o repositório original foi renomeado para [bluora-android](https://github.com/saasolucoes001-cpu/bluora-android), preservando seu histórico, issues e configurações. O repositório [rbw-one-android](https://github.com/saasolucoes001-cpu/rbw-one-android) foi recriado com o mesmo conteúdo para manter o canal de distribuição compatível.
+
+- Desenvolvimento e clones devem usar `https://github.com/saasolucoes001-cpu/bluora-android.git`. O nome antigo agora identifica o canal legado; não há redirecionamento Git para o projeto de desenvolvimento.
+- Preservar `https://saasolucoes001-cpu.github.io/rbw-one-android/`: APKs instalados fixam esse caminho e validam URLs de atualização. Manter manifestos e APKs nesse endereço, sem redirecionamentos e sem alterar bytes dos arquivos já publicados.
+- Não há sincronização automática entre os dois repositórios. Futuras publicações Android devem entregar os APKs aprovados e seus manifestos também ao canal legado, verificando tamanho e SHA-256 públicos. Um push somente em `bluora-android` não atualiza o canal antigo.
+- O repositório principal agora é [bluora](https://github.com/saasolucoes001-cpu/bluora), anteriormente `gestaoemp`.
+- Esta migração não altera pacote `br.com.rbwone.web`, assinatura, versão pública, domínio do aplicativo ou backend.
+
+---
+
 # Versão unificada 1.5.23 / código 20
 
 Mantém o pacote br.com.rbwone.web e a assinatura geração 2. Carrega a mesma interface de produção dos clientes Windows/Linux. Preserva as melhorias nativas de chamadas já preparadas. Atualize sem desinstalar nem limpar dados. Testes automatizados, lint e assinatura aprovados; homologação gráfica/FCM em aparelho físico permanece pendente.
