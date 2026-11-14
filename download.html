@@ -53,7 +53,7 @@ async function loadRelease() {
       || !Number.isSafeInteger(release.sizeBytes) || release.sizeBytes < 1 || release.sizeBytes > 100000000
       || release.minSdkVersion !== 23
       || url.origin !== location.origin || url.username || url.password
-      || !/^\/rbw-one-android\/rbw-one-web-\d+\.\d+\.\d+\.apk$/.test(url.pathname)
+      || !/^\/bluora-android\/rbw-one-web-\d+\.\d+\.\d+\.apk$/.test(url.pathname)
       || !url.pathname.endsWith("/rbw-one-web-" + release.versionName + ".apk")
       || url.search || url.hash || typeof release.sha256 !== "string" || !/^[a-f0-9]{64}$/.test(release.sha256)
       || typeof release.notice !== "string" || release.notice.length > 600) throw Error("Manifesto inválido");

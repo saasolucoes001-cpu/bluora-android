@@ -1,12 +1,10 @@
-# Bluora — desenvolvimento Android
+# Bluora — Android
 
-Migração de repositórios em 14/11/2026: o repositório original foi renomeado para [bluora-android](https://github.com/saasolucoes001-cpu/bluora-android), preservando seu histórico, issues e configurações. O repositório [rbw-one-android](https://github.com/saasolucoes001-cpu/rbw-one-android) foi recriado com o mesmo conteúdo para manter o canal de distribuição compatível.
+O repositório de desenvolvimento é `saasolucoes001-cpu/bluora-android`; o principal é `saasolucoes001-cpu/bluora`.
 
-- Desenvolvimento e clones devem usar `https://github.com/saasolucoes001-cpu/bluora-android.git`. O nome antigo agora identifica o canal legado; não há redirecionamento Git para o projeto de desenvolvimento.
-- Preservar `https://saasolucoes001-cpu.github.io/rbw-one-android/`: APKs instalados fixam esse caminho e validam URLs de atualização. Manter manifestos e APKs nesse endereço, sem redirecionamentos e sem alterar bytes dos arquivos já publicados.
-- Não há sincronização automática entre os dois repositórios. Futuras publicações Android devem entregar os APKs aprovados e seus manifestos também ao canal legado, verificando tamanho e SHA-256 públicos. Um push somente em `bluora-android` não atualiza o canal antigo.
-- O repositório principal agora é [bluora](https://github.com/saasolucoes001-cpu/bluora), anteriormente `gestaoemp`.
-- Esta migração não altera pacote `br.com.rbwone.web`, assinatura, versão pública, domínio do aplicativo ou backend.
+O novo canal de downloads usa https://saasolucoes001-cpu.github.io/bluora-android/download.html . Os APKs históricos mantêm seus bytes e assinaturas. Mudar sua URL no manifesto não muda o atualizador compilado dentro deles.
+
+A migração dos aplicativos instalados ainda depende de um novo APK assinado com a chave de produção geração 2. O código do novo atualizador está em preparação; os APKs existentes continuam consultando `/rbw-one-android/`. Não remover esse canal antes da entrega da atualização compatível. A remoção do repositório legado foi solicitada pelo proprietário e ocorrerá após essa migração, sem criar outros repositórios.
 
 ---
 
@@ -16,7 +14,7 @@ Mantém o pacote br.com.rbwone.web e a assinatura geração 2. Carrega a mesma i
 
 # RBW One — canal Android
 
-Canal independente de distribuição de APKs: https://saasolucoes001-cpu.github.io/rbw-one-android/
+Canal independente de distribuição de APKs: https://saasolucoes001-cpu.github.io/bluora-android/
 
 ## Novo projeto Android com notificações
 

@@ -21,7 +21,7 @@ async function openPage({ manifest = release, failed = false, offline = false, i
   let timer;
   const context = {
     document: { querySelector(selector) { return elements[selector.slice(1)]; } },
-    location: { origin, href: origin + '/rbw-one-android/download.html' },
+    location: { origin, href: origin + '/bluora-android/download.html' },
     URL, AbortController: supportsAbort ? AbortController : undefined,
     fetch(url, options) {
       requests.push({ url, options });
@@ -39,7 +39,7 @@ async function openPage({ manifest = release, failed = false, offline = false, i
 test('APK payload matches release size, SHA-256 and unique first-party path', async () => {
   const url = new URL(release.apkUrl);
   assert.equal(url.origin, origin);
-  assert.equal(url.pathname, '/rbw-one-android/rbw-one-web-1.5.23.apk');
+  assert.equal(url.pathname, '/bluora-android/rbw-one-web-1.5.23.apk');
   assert.equal(release.packageName, 'br.com.rbwone.web');
   assert.equal(release.versionCode, 20);
   assert.equal(release.versionName, '1.5.23');
@@ -94,11 +94,12 @@ test('retry can recover network failure and clears a previous link if a later re
 for (const [label, replacement] of [
   ['legacy package', { packageName: 'br.com.rbwone.app' }],
   ['preview package', { packageName: 'br.com.rbwone.nativepreview' }],
-  ['other origin', { apkUrl: 'https://other.example/rbw-one-android/rbw-one-web-1.0.0.apk' }],
-  ['URL credentials', { apkUrl: 'https://name:password@saasolucoes001-cpu.github.io/rbw-one-android/rbw-one-web-1.0.0.apk' }],
+  ['other origin', { apkUrl: 'https://other.example/bluora-android/rbw-one-web-1.0.0.apk' }],
+  ['URL credentials', { apkUrl: 'https://name:password@saasolucoes001-cpu.github.io/bluora-android/rbw-one-web-1.0.0.apk' }],
+  ['retired repository', { apkUrl: origin + '/rbw-one-android/rbw-one-web-' + release.versionName + '.apk' }],
   ['another repository', { apkUrl: origin + '/other/rbw-one-web-1.0.0.apk' }],
-  ['nested path', { apkUrl: origin + '/rbw-one-android/nested/rbw-one-web-1.0.0.apk' }],
-  ['encoded path', { apkUrl: origin + '/rbw-one-android/%72bw-one-web-1.0.0.apk' }],
+  ['nested path', { apkUrl: origin + '/bluora-android/nested/rbw-one-web-1.0.0.apk' }],
+  ['encoded path', { apkUrl: origin + '/bluora-android/%72bw-one-web-1.0.0.apk' }],
   ['query suffix', { apkUrl: release.apkUrl + '?download=1' }],
   ['fragment suffix', { apkUrl: release.apkUrl + '#x' }],
   ['mismatched filename/version', { versionName: '9.9.9' }],
