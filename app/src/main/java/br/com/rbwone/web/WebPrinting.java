@@ -81,7 +81,7 @@ final class WebPrinting {
             PrintManager manager = (PrintManager) activity.getSystemService(Activity.PRINT_SERVICE);
             if (manager == null) throw new IllegalStateException("Printing unavailable");
             String name = web.getTitle();
-            if (name == null || name.isBlank()) name = "Documento RBW One";
+            if (name == null || name.isBlank()) name = "Documento Bluora";
             lastJob = manager.print(name, web.createPrintDocumentAdapter(name), null);
         } catch (Exception error) { Toast.makeText(activity, "Não foi possível abrir a impressão do Android.", Toast.LENGTH_LONG).show(); }
     }

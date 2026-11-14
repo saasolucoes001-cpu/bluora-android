@@ -12,7 +12,7 @@ public final class PhoneCallRequestTest {
     @Test public void defaultRecipientActionIsAnswer() throws Exception {
         PhoneCallRequest request = PhoneCallRequest.parse(sync(""));
         assertEquals("Atender", request.acceptLabel);
-        assertEquals("Chamada no RBW One", request.label);
+        assertEquals("Chamada no Bluora", request.label);
     }
     @Test public void callbackOriginLabelIsExplicitlyLimited() throws Exception {
         assertEquals("Ligar", PhoneCallRequest.parse(sync(",\"acceptLabel\":\"Ligar\"")).acceptLabel);

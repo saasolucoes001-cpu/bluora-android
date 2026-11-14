@@ -39,12 +39,12 @@ async function openPage({ manifest = release, failed = false, offline = false, i
 test('APK payload matches release size, SHA-256 and unique first-party path', async () => {
   const url = new URL(release.apkUrl);
   assert.equal(url.origin, origin);
-  assert.equal(url.pathname, '/bluora-android/rbw-one-web-1.5.23.apk');
+  assert.equal(url.pathname, '/bluora-android/bluora-android-1.5.26.apk');
   assert.equal(release.packageName, 'br.com.rbwone.web');
-  assert.equal(release.versionCode, 20);
-  assert.equal(release.versionName, '1.5.23');
-  assert.equal(release.signingGeneration, 2);
-  assert.equal(release.signingCertificateSha256, '51bdd94625966be272b47ab53f1c797ef66d83cc7784737e9c1f89af1a1b8d08');
+  assert.equal(release.versionCode, 21);
+  assert.equal(release.versionName, '1.5.26');
+  assert.equal(release.signingGeneration, 3);
+  assert.equal(release.signingCertificateSha256, '650f032698a064407ddd1a58578a6b2b5422bd38c6729ae92ce5352a6e571f67');
   const apk = await readFile(new URL(url.pathname.split('/').at(-1), root));
   assert.equal(apk.length, release.sizeBytes);
   assert.equal(createHash('sha256').update(apk).digest('hex'), release.sha256);
@@ -94,11 +94,11 @@ test('retry can recover network failure and clears a previous link if a later re
 for (const [label, replacement] of [
   ['legacy package', { packageName: 'br.com.rbwone.app' }],
   ['preview package', { packageName: 'br.com.rbwone.nativepreview' }],
-  ['other origin', { apkUrl: 'https://other.example/bluora-android/rbw-one-web-1.0.0.apk' }],
-  ['URL credentials', { apkUrl: 'https://name:password@saasolucoes001-cpu.github.io/bluora-android/rbw-one-web-1.0.0.apk' }],
-  ['retired repository', { apkUrl: origin + '/rbw-one-android/rbw-one-web-' + release.versionName + '.apk' }],
-  ['another repository', { apkUrl: origin + '/other/rbw-one-web-1.0.0.apk' }],
-  ['nested path', { apkUrl: origin + '/bluora-android/nested/rbw-one-web-1.0.0.apk' }],
+  ['other origin', { apkUrl: 'https://other.example/bluora-android/bluora-android-1.0.0.apk' }],
+  ['URL credentials', { apkUrl: 'https://name:password@saasolucoes001-cpu.github.io/bluora-android/bluora-android-1.0.0.apk' }],
+  ['retired repository', { apkUrl: origin + '/rbw-one-android/bluora-android-' + release.versionName + '.apk' }],
+  ['another repository', { apkUrl: origin + '/other/bluora-android-1.0.0.apk' }],
+  ['nested path', { apkUrl: origin + '/bluora-android/nested/bluora-android-1.0.0.apk' }],
   ['encoded path', { apkUrl: origin + '/bluora-android/%72bw-one-web-1.0.0.apk' }],
   ['query suffix', { apkUrl: release.apkUrl + '?download=1' }],
   ['fragment suffix', { apkUrl: release.apkUrl + '#x' }],
@@ -134,10 +134,10 @@ test('landing page preserves explicit legacy links, fallback anchor and hidden-b
   const legacy = JSON.parse(await readFile(new URL('web-latest.json', root), 'utf8'));
   assert.equal(legacy.versionCode, 13);assert.equal(legacy.versionName, '1.0.12');
   assert.equal(legacy.sha256, 'b445a50d3f5e910849c94ed70897432ff43c5835a47dd0c4aa7b65c82cd962ab');
-  assert.match(html, /Atualize a versão 1\.0\.13 sem desinstalar/);
-  assert.match(html, /Não limpe os dados/);
-  assert.match(html, /mantenha o aplicativo atual/);
-  assert.doesNotMatch(html, /desinstale-a antes/);
+  assert.match(html, /Nova instalação Bluora/);
+  assert.match(html, /Desinstale o aplicativo RBW One antigo/);
+  assert.match(html, /dados locais/);
+  assert.doesNotMatch(html, /sem desinstalar/);
   const source=await readFile(new URL('app/src/main/java/br/com/rbwone/web/UpdateRelease.java',root),'utf8');
   assert.match(source,/web-v2-latest\.json/);
  });

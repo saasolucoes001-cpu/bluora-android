@@ -416,7 +416,7 @@ public final class MainActivity extends Activity {
             SessionRecord current = coordinator.store().read();
             if (destroyed || current == null || !current.token.equals(captured.token) || !current.matches(user, sessionId, System.currentTimeMillis())) return;
             if (route == null) {
-                Toast.makeText(this, "Não foi possível abrir o aviso. Consulte as notificações no RBW One.", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Não foi possível abrir o aviso. Consulte as notificações no Bluora.", Toast.LENGTH_LONG).show();
                 return;
             }
             if (replyProxy != null && officialPage()) emit("open", "route", route);

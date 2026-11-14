@@ -5,7 +5,7 @@ public final class NotificationText {
     public final String title, body;
     private NotificationText(String title, String body) { this.title = title; this.body = body; }
     public static NotificationText from(String title, String body) {
-        return new NotificationText(clean(title, 160, "RBW One"), clean(body, 1000, "Há uma nova notificação para você."));
+        return new NotificationText(clean(title, 160, "Bluora"), clean(body, 1000, "Há uma nova notificação para você."));
     }
     private static String clean(String value, int limit, String fallback) {
         if (value == null) return fallback;

@@ -3,17 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>RBW One — aplicativo Android</title>
+<title>Bluora — aplicativo Android</title>
 <style>
 *{box-sizing:border-box}body{font:16px/1.6 system-ui,sans-serif;background:#f4f7fa;color:#183a5b;margin:0;padding:24px}main{max-width:640px;margin:24px auto;background:white;padding:28px;border:1px solid #d6e1ea;border-radius:20px}h1{margin-top:0}a{color:#004889}.download{display:inline-block;background:#004889;color:white;padding:12px 22px;border-radius:12px;text-decoration:none;font-weight:600}button{font:inherit;color:#004889;background:white;border:1px solid #004889;border-radius:8px;padding:8px 14px;cursor:pointer}small{display:block;overflow-wrap:anywhere;color:#486176}[hidden]{display:none!important}@media(max-width:360px){body{padding:12px}main{padding:20px}}
 </style>
 </head>
 <body>
 <main>
-<h1>RBW One para Android</h1>
-<p>Aplicativo com central de notificações e som do RBW One.</p>
-<p><strong>Atualize a versão 1.0.13 sem desinstalar.</strong> Salve o trabalho, abra o RBW One e toque em “Atualizar agora”. Confirme “Atualizar” na tela do Android para manter os dados e o login. Não limpe os dados do aplicativo.</p>
-<p>Se a versão instalada for 1.0.12 ou anterior, mantenha o aplicativo atual e peça orientação ao TI antes de instalar: a assinatura é diferente.</p>
+<h1>Bluora para Android</h1>
+<p>Aplicativo com central de notificações e som do Bluora.</p>
+<p><strong>Nova instalação Bluora — assinatura geração 3.</strong> Salve o trabalho e os arquivos locais necessários. Desinstale o aplicativo RBW One antigo e instale este APK. A reinstalação remove o login, as preferências e os dados locais; os dados salvos no servidor permanecem. Entre novamente e permita as notificações. As próximas atualizações usarão este novo canal.</p>
+<p>Antes de desinstalar, exporte arquivos que existam somente no aparelho. Esta troca de assinatura exige reinstalação também nas versões 1.0.13 e posteriores.</p>
 <p id="status" role="status" aria-live="polite">Consultando a versão disponível…</p>
 <p id="notice"></p>
 <p><a id="download" class="download" hidden>Baixar APK</a></p>
@@ -53,8 +53,8 @@ async function loadRelease() {
       || !Number.isSafeInteger(release.sizeBytes) || release.sizeBytes < 1 || release.sizeBytes > 100000000
       || release.minSdkVersion !== 23
       || url.origin !== location.origin || url.username || url.password
-      || !/^\/bluora-android\/rbw-one-web-\d+\.\d+\.\d+\.apk$/.test(url.pathname)
-      || !url.pathname.endsWith("/rbw-one-web-" + release.versionName + ".apk")
+      || !/^\/bluora-android\/bluora-android-\d+\.\d+\.\d+\.apk$/.test(url.pathname)
+      || !url.pathname.endsWith("/bluora-android-" + release.versionName + ".apk")
       || url.search || url.hash || typeof release.sha256 !== "string" || !/^[a-f0-9]{64}$/.test(release.sha256)
       || typeof release.notice !== "string" || release.notice.length > 600) throw Error("Manifesto inválido");
     status.textContent = "Versão disponível: " + release.versionName;

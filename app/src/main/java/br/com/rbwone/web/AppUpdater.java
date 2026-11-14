@@ -58,7 +58,7 @@ public final class AppUpdater {
             activity.runOnUiThread(() -> {
                 busy = false;
                 if (!visible() || found == null || !found.isNewer(BuildConfig.VERSION_CODE, Build.VERSION.SDK_INT)) return;
-                dialog = new AlertDialog.Builder(activity).setTitle("Atualização do RBW One")
+                dialog = new AlertDialog.Builder(activity).setTitle("Atualização do Bluora")
                         .setMessage("A versão " + found.versionName + " está disponível. Deseja baixar e instalar agora?")
                         .setNegativeButton("Depois", (d, w) -> {}).setPositiveButton("Atualizar agora", (d, w) -> download(found)).create();
                 AlertDialog prompt = dialog;
@@ -69,7 +69,7 @@ public final class AppUpdater {
     private void download(UpdateRelease release) {
         busy = true; cancelled = false;
         dialog = new AlertDialog.Builder(activity).setTitle("Baixando atualização")
-                .setMessage("Aguarde enquanto o RBW One baixa e verifica a versão " + release.versionName + ".")
+                .setMessage("Aguarde enquanto o Bluora baixa e verifica a versão " + release.versionName + ".")
                 .setNegativeButton("Cancelar", (d, w) -> cancelled = true).create();
         AlertDialog progress = dialog;
         progress.setOnCancelListener(d -> cancelled = true);
@@ -116,7 +116,7 @@ public final class AppUpdater {
         try {
             if (Build.VERSION.SDK_INT >= 26 && !activity.getPackageManager().canRequestPackageInstalls()) {
                 dialog = new AlertDialog.Builder(activity).setTitle("Permitir atualização")
-                        .setMessage("Autorize o RBW One a instalar esta atualização na próxima tela. O Android ainda pedirá sua confirmação.")
+                        .setMessage("Autorize o Bluora a instalar esta atualização na próxima tela. O Android ainda pedirá sua confirmação.")
                         .setNegativeButton("Depois", (d,w) -> ready = null)
                         .setPositiveButton("Abrir configurações", (d,w) -> {
                             try { awaitingPermission = true; activity.startActivity(new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, Uri.parse("package:" + activity.getPackageName()))); }

@@ -18,7 +18,7 @@ public final class PhoneCallRequest {
                 || !(action instanceof String) || !ACTIONS.contains(action)) throw new IllegalArgumentException("Pedido inválido.");
         JSONObject payload = input.optJSONObject("payload");
         if (payload == null) payload = new JSONObject();
-        String owner = "", call = "", state = "", label = "Chamada no RBW One", accept = "Atender";
+        String owner = "", call = "", state = "", label = "Chamada no Bluora", accept = "Atender";
         if (action.equals("sync") || action.equals("clear")) {
             if (!(payload.opt("ownerKey") instanceof String)) throw new IllegalArgumentException("Vínculo inválido.");
             owner = payload.getString("ownerKey");
@@ -31,7 +31,7 @@ public final class PhoneCallRequest {
             if (payload.has("label")) {
                 if (!(payload.opt("label") instanceof String) || payload.getString("label").length() > 160) throw new IllegalArgumentException("Nome inválido.");
                 label = payload.getString("label").replaceAll("[\\p{Cntrl}]", " ").trim();
-                if (label.isEmpty()) label = "Chamada no RBW One";
+                if (label.isEmpty()) label = "Chamada no Bluora";
                 if (label.length() > 80) label = label.substring(0, 80);
             }
             if (payload.has("acceptLabel")) {

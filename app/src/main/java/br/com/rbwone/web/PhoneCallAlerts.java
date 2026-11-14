@@ -39,7 +39,7 @@ public final class PhoneCallAlerts {
     public PhoneCallAlerts(Context context) {
         this.context = context.getApplicationContext();
         if (Build.VERSION.SDK_INT >= 26) {
-            NotificationChannel channel = new NotificationChannel(CHANNEL, "Chamadas no RBW One", NotificationManager.IMPORTANCE_HIGH);
+            NotificationChannel channel = new NotificationChannel(CHANNEL, "Chamadas no Bluora", NotificationManager.IMPORTANCE_HIGH);
             channel.setDescription("Chamadas recebidas enquanto o telefone do aplicativo permanece conectado.");
             // The existing WebView owns ringing audio. Avoid a second simultaneous ringtone.
             channel.setSound(null, null); channel.enableVibration(true);
@@ -142,11 +142,11 @@ public final class PhoneCallAlerts {
             if (foreground || call == null || !permissionGranted()) { cancel(); return; }
             PendingIntent answer = pending(call, "answer"), reject = pending(call, "reject");
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL)
-                    .setSmallIcon(R.drawable.ic_notification).setContentTitle("Chamada no RBW One")
+                    .setSmallIcon(R.drawable.ic_notification).setContentTitle("Chamada no Bluora")
                     .setContentText(call.label).setContentIntent(pending(call, "open")).setCategory(NotificationCompat.CATEGORY_CALL)
                     .setPriority(NotificationCompat.PRIORITY_HIGH).setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
                     .setPublicVersion(new NotificationCompat.Builder(context, CHANNEL).setSmallIcon(R.drawable.ic_notification)
-                            .setContentTitle("Chamada no RBW One").build())
+                            .setContentTitle("Chamada no Bluora").build())
                     .setOnlyAlertOnce(true).setAutoCancel(false).setTimeoutAfter(Math.max(1, call.expiresAt - now()));
             if (call.acceptLabel.equals("Atender")) {
                 builder.setStyle(NotificationCompat.CallStyle.forIncomingCall(

@@ -1,3 +1,7 @@
+# Bluora 1.5.26 / código 21 — assinatura geração 3
+
+A migração de 14/11/2026 usa o novo canal `https://saasolucoes001-cpu.github.io/bluora-android/`, nome e símbolo Bluora e nova assinatura autorizada pelo proprietário. Requer desinstalar o aplicativo antigo; login e dados locais são removidos. O pacote continua `br.com.rbwone.web`; a origem web e o backend permanecem os de produção atuais. Consulte o README para download, certificado, backup e validações. Os registros abaixo são históricos e não alteram as instruções desta migração.
+
 # Versão unificada 1.5.23 / código 20
 
 Mantém o pacote br.com.rbwone.web e a assinatura geração 2. Carrega a mesma interface de produção dos clientes Windows/Linux. Preserva as melhorias nativas de chamadas já preparadas. Atualize sem desinstalar nem limpar dados. Testes automatizados, lint e assinatura aprovados; homologação gráfica/FCM em aparelho físico permanece pendente.

@@ -10,7 +10,7 @@ import java.util.function.BooleanSupplier;
 
 /** The public channel is untrusted input, never a source of credentials or arbitrary URLs. */
 public final class UpdateRelease {
-    public static final String MANIFEST = "https://saasolucoes001-cpu.github.io/rbw-one-android/web-v2-latest.json";
+    public static final String MANIFEST = "https://saasolucoes001-cpu.github.io/bluora-android/web-v2-latest.json";
     public final int versionCode, minSdk;
     public final String versionName, apkUrl, sha256;
     public final long size;
@@ -24,7 +24,7 @@ public final class UpdateRelease {
                 || size < 1_000_000 || size > 50 * 1024 * 1024 || !sha256.matches("[a-f0-9]{64}")
                 || !"https".equals(uri.getScheme()) || !"saasolucoes001-cpu.github.io".equals(uri.getHost())
                 || uri.getPort() != -1 || uri.getRawUserInfo() != null || uri.getRawQuery() != null || uri.getRawFragment() != null
-                || !("/rbw-one-android/rbw-one-web-" + versionName + ".apk").equals(uri.getRawPath())) {
+                || !("/bluora-android/bluora-android-" + versionName + ".apk").equals(uri.getRawPath())) {
             throw new IOException("Canal de atualização inválido.");
         }
     }

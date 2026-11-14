@@ -23,8 +23,8 @@ public final class NotificationChannels {
     public static void ensure(Context context) {
         if (Build.VERSION.SDK_INT < 26) return;
         NotificationManager manager = context.getSystemService(NotificationManager.class);
-        NotificationChannel bird = new NotificationChannel(BIRD, "Atualizações · RBW One", NotificationManager.IMPORTANCE_DEFAULT);
-        bird.setDescription("Novas notificações do RBW One com som do RBW One.");
+        NotificationChannel bird = new NotificationChannel(BIRD, "Atualizações · Bluora", NotificationManager.IMPORTANCE_DEFAULT);
+        bird.setDescription("Novas notificações do Bluora com som do Bluora.");
         bird.setSound(sound(context), new AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_NOTIFICATION).setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION).build());
         bird.setLockscreenVisibility(NotificationCompat.VISIBILITY_PRIVATE);
         NotificationChannel silent = new NotificationChannel(SILENT, "Atualizações silenciosas", NotificationManager.IMPORTANCE_DEFAULT);

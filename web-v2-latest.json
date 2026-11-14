@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
   "packageName": "br.com.rbwone.web",
-  "versionCode": 20,
-  "versionName": "1.5.23",
-  "apkUrl": "https://saasolucoes001-cpu.github.io/bluora-android/rbw-one-web-1.5.23.apk",
-  "sha256": "e2322546cd8cc9b703021e9b8d1624e289b62f248107a7078c410d1a84ff97c8",
-  "sizeBytes": 4232755,
+  "versionCode": 21,
+  "versionName": "1.5.26",
+  "apkUrl": "https://saasolucoes001-cpu.github.io/bluora-android/bluora-android-1.5.26.apk",
+  "sha256": "45be9685482e9be97c778b5be2275f410466a523f73275806b4c09d321f98637",
+  "sizeBytes": 4106724,
   "minSdkVersion": 23,
-  "notice": "Versão unificada 1.5.23 para Windows, Linux e Android. Mesma interface oficial e backend Linux. Atualize sem desinstalar nem limpar dados. Compatível com assinatura geração 2 (1.0.13 ou posterior).",
-  "signingGeneration": 2,
-  "signingCertificateSha256": "51bdd94625966be272b47ab53f1c797ef66d83cc7784737e9c1f89af1a1b8d08"
+  "notice": "Bluora 1.5.26 — nova assinatura geração 3. Desinstale o RBW One antigo antes de instalar. A reinstalação remove login, preferências e dados locais; os dados salvos no servidor permanecem. Próximas atualizações usam o novo canal Bluora.",
+  "signingGeneration": 3,
+  "signingCertificateSha256": "650f032698a064407ddd1a58578a6b2b5422bd38c6729ae92ce5352a6e571f67"
 }

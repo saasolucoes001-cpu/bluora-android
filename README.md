@@ -1,10 +1,18 @@
-# Bluora — Android
+# Bluora Android 1.5.26 — nova instalação
 
-O repositório de desenvolvimento é `saasolucoes001-cpu/bluora-android`; o principal é `saasolucoes001-cpu/bluora`.
+Canal oficial: https://saasolucoes001-cpu.github.io/bluora-android/download.html
 
-O novo canal de downloads usa https://saasolucoes001-cpu.github.io/bluora-android/download.html . Os APKs históricos mantêm seus bytes e assinaturas. Mudar sua URL no manifesto não muda o atualizador compilado dentro deles.
+APK `bluora-android-1.5.26.apk`, código 21, pacote `br.com.rbwone.web`, assinatura geração 3. O proprietário autorizou em 14/11/2026 uma nova assinatura, reinstalação com remoção de dados locais e desativação do repositório extra `rbw-one-android`. Não criar outro repositório para o canal antigo.
 
-A migração dos aplicativos instalados ainda depende de um novo APK assinado com a chave de produção geração 2. O código do novo atualizador está em preparação; os APKs existentes continuam consultando `/rbw-one-android/`. Não remover esse canal antes da entrega da atualização compatível. A remoção do repositório legado foi solicitada pelo proprietário e ocorrerá após essa migração, sem criar outros repositórios.
+Salve os arquivos locais necessários, desinstale o RBW One e instale o Bluora. A troca remove login, preferências e dados locais; os dados gravados no servidor permanecem. As próximas atualizações usam somente `/bluora-android/`. Os APKs antigos não aprendem esse endereço automaticamente e devem ser substituídos manualmente.
+
+Certificado SHA-256: `650f032698a064407ddd1a58578a6b2b5422bd38c6729ae92ce5352a6e571f67`. Chave RSA-4096 guardada fora do Git no Ubuntu/env3, em `/etc/bluora/android-signing/production-20261114` (pasta 0700, arquivos 0600). Backup criptografado Restic no Dropbox, repositório existente `RBW One - Backups/env3-restic`, snapshot `7cac4e6d7feb5dc73d4a383525d4b3dfbb2c98b7e42bc9f43cf2e94186118ea5`; restauração conferida byte a byte. Nunca incluir credenciais, senha do backup ou keystore no Git.
+
+Compilação release, 100 testes JVM, 41 testes Node e lint aprovados. Assinaturas APK v1/v2, identidade, versão e endereço do atualizador conferidos no APK final. Instalação gráfica, login e FCM em aparelho físico não foram testados nesta entrega.
+
+Os canais `latest.json`, `native-latest.json` e `web-latest.json` preservam seus pacotes e hashes históricos, disponíveis no novo repositório. `web-v2-latest.json` oferece a nova instalação, com aviso explícito de reinstalação.
+
+O repositório principal é https://github.com/saasolucoes001-cpu/bluora . As seções abaixo são registros históricos; suas instruções de assinatura e atualização foram substituídas pela migração acima.
 
 ---
 

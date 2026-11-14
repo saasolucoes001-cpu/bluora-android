@@ -8,7 +8,7 @@ public class NotificationTextTest {
         assertTrue(text.body.startsWith("Chamado #42."));
     }
     @Test public void supportsOlderBackendAndCleansWhitespace() {
-        assertEquals("RBW One", NotificationText.from(null, "").title);
+        assertEquals("Bluora", NotificationText.from(null, "").title);
         assertEquals("Há uma nova notificação para você.", NotificationText.from(null, "").body);
         assertEquals("Olá mundo", NotificationText.from("  Olá\n\t mundo  ", "x").title);
     }
