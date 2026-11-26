@@ -39,10 +39,10 @@ async function openPage({ manifest = release, failed = false, offline = false, i
 test('APK payload matches release size, SHA-256 and unique first-party path', async () => {
   const url = new URL(release.apkUrl);
   assert.equal(url.origin, origin);
-  assert.equal(url.pathname, '/bluora-android/bluora-android-1.5.26.apk');
+  assert.equal(url.pathname, '/bluora-android/bluora-android-1.5.27.apk');
   assert.equal(release.packageName, 'br.com.rbwone.web');
-  assert.equal(release.versionCode, 21);
-  assert.equal(release.versionName, '1.5.26');
+  assert.equal(release.versionCode, 22);
+  assert.equal(release.versionName, '1.5.27');
   assert.equal(release.signingGeneration, 3);
   assert.equal(release.signingCertificateSha256, '650f032698a064407ddd1a58578a6b2b5422bd38c6729ae92ce5352a6e571f67');
   const apk = await readFile(new URL(url.pathname.split('/').at(-1), root));
@@ -130,14 +130,15 @@ test('landing page preserves explicit legacy links, fallback anchor and hidden-b
   assert.match(html, /\[hidden\]\{display:none!important\}/);
 });
 
- test('new signing generation keeps old installed clients on their original channel', async () => {
+ test('generation 3 update preserves its clients and separates the legacy signing warning', async () => {
   const legacy = JSON.parse(await readFile(new URL('web-latest.json', root), 'utf8'));
   assert.equal(legacy.versionCode, 13);assert.equal(legacy.versionName, '1.0.12');
   assert.equal(legacy.sha256, 'b445a50d3f5e910849c94ed70897432ff43c5835a47dd0c4aa7b65c82cd962ab');
   assert.match(html, /Nova instalação Bluora/);
   assert.match(html, /Desinstale o aplicativo RBW One antigo/);
   assert.match(html, /dados locais/);
-  assert.doesNotMatch(html, /sem desinstalar/);
+  assert.match(html, /sem desinstalar/);
+  assert.match(html, /<details>[\s\S]*Nova instalação Bluora[\s\S]*Desinstale o aplicativo RBW One antigo[\s\S]*<\/details>/);
   const source=await readFile(new URL('app/src/main/java/br/com/rbwone/web/UpdateRelease.java',root),'utf8');
   assert.match(source,/web-v2-latest\.json/);
  });
@@ -155,4 +156,11 @@ test('release source agrees with published version and Linux notification backen
   assert.equal(claims.iss, 'supabase');
   const store = await readFile(new URL('app/src/main/java/br/com/rbwone/web/SecureSessionStore.java', root), 'utf8');
   assert.ok(store.includes('getSharedPreferences("rbw_notifications_linux_v1"'));
+});
+
+
+test('previous generation 3 APK remains byte-identical and version code increases', async () => {
+  const previous = await readFile(new URL('bluora-android-1.5.26.apk', root));
+  assert.equal(createHash('sha256').update(previous).digest('hex'), '45be9685482e9be97c778b5be2275f410466a523f73275806b4c09d321f98637');
+  assert.ok(release.versionCode > 21);
 });

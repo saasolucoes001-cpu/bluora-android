@@ -1,3 +1,20 @@
+# Bluora Android 1.5.27 — atualização da geração 3
+
+Versão pública 1.5.27, código Android 22, pacote `br.com.rbwone.web`.
+Preserva o certificado geração 3 `650f032698a064407ddd1a58578a6b2b5422bd38c6729ae92ce5352a6e571f67`.
+Atualiza o Bluora 1.5.26 sem desinstalar nem limpar login, preferências ou arquivos locais.
+A confirmação de instalação continua sendo feita pelo Android.
+
+A WebView carrega a interface publicada em `https://rbwone.com.br`, incluindo
+**Meu perfil → Atualizar Agora** nos quatro portais internos. O botão consulta e
+atualiza a interface; a atualização do pacote Android usa o canal nativo existente.
+Os instaladores e canais históricos permanecem preservados. Esta entrega não
+representa homologação de instalação, chamadas ou FCM em aparelho físico.
+
+Os registros abaixo descrevem as entregas anteriores.
+
+---
+
 # Bluora 1.5.26 / código 21 — assinatura geração 3
 
 A migração de 14/11/2026 usa o novo canal `https://saasolucoes001-cpu.github.io/bluora-android/`, nome e símbolo Bluora e nova assinatura autorizada pelo proprietário. Requer desinstalar o aplicativo antigo; login e dados locais são removidos. O pacote continua `br.com.rbwone.web`; a origem web e o backend permanecem os de produção atuais. Consulte o README para download, certificado, backup e validações. Os registros abaixo são históricos e não alteram as instruções desta migração.
