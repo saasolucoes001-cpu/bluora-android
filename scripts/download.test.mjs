@@ -39,10 +39,10 @@ async function openPage({ manifest = release, failed = false, offline = false, i
 test('APK payload matches release size, SHA-256 and unique first-party path', async () => {
   const url = new URL(release.apkUrl);
   assert.equal(url.origin, origin);
-  assert.equal(url.pathname, '/bluora-android/bluora-android-1.5.28.apk');
+  assert.equal(url.pathname, '/bluora-android/bluora-android-1.5.29.apk');
   assert.equal(release.packageName, 'br.com.rbwone.web');
-  assert.equal(release.versionCode, 23);
-  assert.equal(release.versionName, '1.5.28');
+  assert.equal(release.versionCode, 24);
+  assert.equal(release.versionName, '1.5.29');
   assert.equal(release.signingGeneration, 3);
   assert.equal(release.signingCertificateSha256, '650f032698a064407ddd1a58578a6b2b5422bd38c6729ae92ce5352a6e571f67');
   const apk = await readFile(new URL(url.pathname.split('/').at(-1), root));

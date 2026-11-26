@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
   "packageName": "br.com.rbwone.web",
-  "versionCode": 23,
-  "versionName": "1.5.28",
-  "apkUrl": "https://saasolucoes001-cpu.github.io/bluora-android/bluora-android-1.5.28.apk",
-  "sha256": "b30d5e0b30a763c4e44d0fe67693592bb821e07b2d2bb5c8d50aed9058708b13",
-  "sizeBytes": 3985496,
+  "versionCode": 24,
+  "versionName": "1.5.29",
+  "apkUrl": "https://saasolucoes001-cpu.github.io/bluora-android/bluora-android-1.5.29.apk",
+  "sha256": "7766936dc73a79f1a7357ca3ee86eae0b2c84487a0a068f29c1bf6d11101f164",
+  "sizeBytes": 3985495,
   "minSdkVersion": 23,
-  "notice": "Bluora 1.5.28: novo logotipo e ícones, com a assinatura geração 3 preservada, sem desinstalar nem limpar os dados locais. A instalação depende da confirmação do Android. Aplicativos RBW One com assinaturas anteriores exigem orientação do TI.",
+  "notice": "Bluora 1.5.29: atualização unificada e ajustes na área de trabalho. A assinatura geração 3 permanece a mesma, sem desinstalar nem limpar os dados locais. A instalação depende da confirmação do Android.",
   "signingGeneration": 3,
   "signingCertificateSha256": "650f032698a064407ddd1a58578a6b2b5422bd38c6729ae92ce5352a6e571f67"
 }
