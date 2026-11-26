@@ -1,0 +1,24 @@
+{
+  "version": "1.5.28",
+  "sourceCommit": "8452ea437a1d01c708a402522472faee40d7a871",
+  "androidSourceCommit": "2d93eb1c5fc0ea313fbc662dd39663247b4453de",
+  "artifact": {
+    "fileName": "bluora-android-1.5.28.apk",
+    "size": 3985496,
+    "sha256": "b30d5e0b30a763c4e44d0fe67693592bb821e07b2d2bb5c8d50aed9058708b13",
+    "sha512": "ZdsCGQxRYacs/mO0DaU5ltwCg0Uu8yMLOjE7/cqJZY9KNZvNxRJb9/sS/nuWmCrmVvxRsyBZOmxQ/ww2ENMbrw==",
+    "versionCode": 23,
+    "packageName": "br.com.rbwone.web",
+    "certificateSha256": "650f032698a064407ddd1a58578a6b2b5422bd38c6729ae92ce5352a6e571f67"
+  },
+  "buildProofSha256": "024608f191b65654b9b8f479385f7454535dc281c13132a8e202a4b91afb26af",
+  "sitePublication": {
+    "action": "publish",
+    "actor": "dc156eb5-9a6b-421c-a4be-ed2596df7250",
+    "after": "/opt/rbw-native/releases/main-8452ea437a1d/web",
+    "backup": "/opt/rbw-preview/audit/1795694699036521539-Caddyfile",
+    "before": "/opt/rbw-native/releases/main-7fd828078234/web",
+    "sha": "8452ea437a1d01c708a402522472faee40d7a871",
+    "time": 1795694699.2796657
+  }
+}
