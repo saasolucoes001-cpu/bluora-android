@@ -171,6 +171,7 @@ public final class MainActivity extends Activity {
                     } catch (Exception ignored) { } };
                     if (action.equals("check")) updater.check(reply);
                     else if (action.equals("state")) reply.run();
+                    else if (action.equals("cancel")) { updater.cancel(); reply.run(); }
                     else if (action.equals("install")) {
                         try { if (!resumed) throw new IllegalStateException(); updater.requestInstall(); reply.run(); }
                         catch (Exception ignored) { proxy.postMessage(new JSONObject().put("id", id).put("error", "Não foi possível iniciar a atualização. Tente novamente.").toString()); }

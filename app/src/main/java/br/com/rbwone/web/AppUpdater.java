@@ -31,19 +31,24 @@ public final class AppUpdater {
     private File ready;
     private UpdateRelease available;
     private boolean checked;
+    private String updateError;
     private final String sessionId = java.util.UUID.randomUUID().toString();
     private final java.util.List<Runnable> checks = new java.util.ArrayList<>();
     public JSONObject state() {
         JSONObject value = new JSONObject();
         try { value.put("supported", true).put("installedVersion", BuildConfig.VERSION_NAME)
             .put("availableVersion", available == null ? JSONObject.NULL : available.versionName)
-            .put("sessionId", sessionId).put("busy", busy || ready != null).put("checked", checked).put("platform", "android"); } catch (Exception ignored) { }
+            .put("error", updateError == null ? JSONObject.NULL : updateError).put("sessionId", sessionId).put("busy", busy || ready != null).put("checked", checked).put("platform", "android"); } catch (Exception ignored) { }
         return value;
     }
     public void check(Runnable complete) {
         if (destroyed || busy || dialog != null || ready != null) { complete.run(); return; }
         checks.add(complete);
         if (!busy) check();
+    }
+    public void cancel() {
+        cancelled = true;
+        if (ready != null) { ready.delete(); ready = null; }
     }
     public void requestInstall() {
         if (!visible() || busy || available == null || dialog != null) throw new IllegalStateException("Confira novamente a atualização disponível.");
@@ -85,13 +90,7 @@ public final class AppUpdater {
         });
     }
     private void download(UpdateRelease release) {
-        busy = true; cancelled = false;
-        dialog = new AlertDialog.Builder(activity).setTitle("Baixando atualização")
-                .setMessage("Aguarde enquanto o Bluora baixa e verifica a versão " + release.versionName + ".")
-                .setNegativeButton("Cancelar", (d, w) -> cancelled = true).create();
-        AlertDialog progress = dialog;
-        progress.setOnCancelListener(d -> cancelled = true);
-        progress.setOnDismissListener(d -> { if (dialog == progress) dialog = null; }); progress.setCanceledOnTouchOutside(false); progress.show();
+        busy = true; cancelled = false; updateError = null;
         worker.execute(() -> {
             File directory = new File(activity.getCacheDir(), "updates");
             File file = new File(directory, "rbw-" + java.util.UUID.randomUUID() + ".apk"); boolean valid = false;
@@ -107,13 +106,10 @@ public final class AppUpdater {
             if (!valid) file.delete();
             boolean success = valid;
             activity.runOnUiThread(() -> {
-                busy = false; progress.dismiss();
+                busy = false;
                 if (destroyed) { file.delete(); return; }
                 if (success) { ready = file; if (visible()) install(); }
-                else if (!visible()) return;
-                else if (!cancelled) new AlertDialog.Builder(activity).setTitle("Atualização não concluída")
-                        .setMessage("Não foi possível baixar ou validar o instalador. Confira a conexão e tente novamente.")
-                        .setNegativeButton("Depois", (d,w) -> {}).setPositiveButton("Tentar novamente", (d,w) -> download(release)).show();
+                else if (!cancelled) updateError = "Não foi possível baixar ou validar o instalador. Confira a conexão e tente novamente.";
             });
         });
     }
