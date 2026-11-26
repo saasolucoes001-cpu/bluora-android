@@ -29,6 +29,26 @@ public final class AppUpdater {
     private boolean busy, destroyed, awaitingPermission, skipNextCheck, foreground;
     private AlertDialog dialog;
     private File ready;
+    private UpdateRelease available;
+    private boolean checked;
+    private final String sessionId = java.util.UUID.randomUUID().toString();
+    private final java.util.List<Runnable> checks = new java.util.ArrayList<>();
+    public JSONObject state() {
+        JSONObject value = new JSONObject();
+        try { value.put("supported", true).put("installedVersion", BuildConfig.VERSION_NAME)
+            .put("availableVersion", available == null ? JSONObject.NULL : available.versionName)
+            .put("sessionId", sessionId).put("busy", busy || ready != null).put("checked", checked).put("platform", "android"); } catch (Exception ignored) { }
+        return value;
+    }
+    public void check(Runnable complete) {
+        if (destroyed || busy || dialog != null || ready != null) { complete.run(); return; }
+        checks.add(complete);
+        if (!busy) check();
+    }
+    public void requestInstall() {
+        if (!visible() || busy || available == null || dialog != null) throw new IllegalStateException("Confira novamente a atualização disponível.");
+        download(available);
+    }
     public AppUpdater(Activity activity) { this.activity = activity; }
     private boolean visible() { return foreground && !destroyed && !activity.isFinishing() && !activity.isDestroyed(); }
     private static HttpURLConnection connect(String url) throws Exception {
@@ -38,7 +58,7 @@ public final class AppUpdater {
     }
     public void check() {
         foreground = true;
-        if (skipNextCheck) { skipNextCheck = false; return; }
+        if (skipNextCheck) skipNextCheck = false;
         if (destroyed || busy || dialog != null || ready != null) return;
         busy = true;
         worker.execute(() -> {
@@ -57,12 +77,10 @@ public final class AppUpdater {
             UpdateRelease found = release;
             activity.runOnUiThread(() -> {
                 busy = false;
-                if (!visible() || found == null || !found.isNewer(BuildConfig.VERSION_CODE, Build.VERSION.SDK_INT)) return;
-                dialog = new AlertDialog.Builder(activity).setTitle("Atualização do Bluora")
-                        .setMessage("A versão " + found.versionName + " está disponível. Deseja baixar e instalar agora?")
-                        .setNegativeButton("Depois", (d, w) -> {}).setPositiveButton("Atualizar agora", (d, w) -> download(found)).create();
-                AlertDialog prompt = dialog;
-                prompt.setOnDismissListener(d -> { if (dialog == prompt) dialog = null; }); prompt.show();
+                checked = found != null;
+                available = found != null && found.isNewer(BuildConfig.VERSION_CODE, Build.VERSION.SDK_INT) ? found : null;
+                java.util.List<Runnable> callbacks = new java.util.ArrayList<>(checks); checks.clear();
+                for (Runnable callback : callbacks) callback.run();
             });
         });
     }

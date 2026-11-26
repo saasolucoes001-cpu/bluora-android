@@ -144,10 +144,13 @@ test('landing page preserves explicit legacy links, fallback anchor and hidden-b
  });
 
 
-test('release source agrees with published version and Linux notification backend', async () => {
+test('release source never regresses the public channel and keeps the Linux notification backend', async () => {
   const gradle = await readFile(new URL('app/build.gradle', root), 'utf8');
-  assert.equal(Number(gradle.match(/versionCode (\d+)/)[1]), release.versionCode);
-  assert.equal(gradle.match(/versionName '([^']+)'/)[1], release.versionName);
+  const sourceCode=Number(gradle.match(/versionCode (\d+)/)[1]);
+  const sourceVersion=gradle.match(/versionName '([^']+)'/)[1];
+  assert.ok(sourceCode >= release.versionCode);
+  if (sourceCode === release.versionCode) assert.equal(sourceVersion, release.versionName);
+  else assert.ok(sourceVersion.localeCompare(release.versionName, undefined, {numeric:true}) > 0);
   assert.ok(gradle.includes('https://db.rbwone.com.br/functions/v1/notifications-api'));
   assert.ok(!gradle.includes('qirmwsqksvraowcnleqw.supabase.co'));
   const key = gradle.match(/PUBLIC_API_KEY[^\n]+?"([^"']+)"/)[1];

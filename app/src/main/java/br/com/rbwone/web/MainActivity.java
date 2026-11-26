@@ -158,6 +158,25 @@ public final class MainActivity extends Activity {
         if (!downloads.install(web)) addNotice(root, "Atualize o Android System WebView para salvar arquivos gerados pelo site.");
         printing.install(web);
         if (WebViewFeature.isFeatureSupported(WebViewFeature.WEB_MESSAGE_LISTENER)) {
+            WebViewCompat.addWebMessageListener(web, "RBWUpdates", Collections.singleton(RoutePolicy.ORIGIN), (view, message, sourceOrigin, isMainFrame, proxy) -> {
+                if (!isMainFrame || !RoutePolicy.officialOrigin(sourceOrigin.toString()) || !officialPage() || updater == null) return;
+                try {
+                    String raw = message.getData();
+                    if (raw == null || raw.length() > 256) return;
+                    JSONObject request = new JSONObject(raw);
+                    String id = request.getString("id"), action = request.getString("action");
+                    if (!id.matches("[0-9]{1,12}")) return;
+                    Runnable reply = () -> { try {
+                        if (officialPage()) proxy.postMessage(new JSONObject().put("id", id).put("state", updater.state()).toString());
+                    } catch (Exception ignored) { } };
+                    if (action.equals("check")) updater.check(reply);
+                    else if (action.equals("state")) reply.run();
+                    else if (action.equals("install")) {
+                        try { if (!resumed) throw new IllegalStateException(); updater.requestInstall(); reply.run(); }
+                        catch (Exception ignored) { proxy.postMessage(new JSONObject().put("id", id).put("error", "Não foi possível iniciar a atualização. Tente novamente.").toString()); }
+                    }
+                } catch (Exception ignored) { /* Invalid messages cannot reach the installer. */ }
+            });
             WebViewCompat.addWebMessageListener(web, "RBWNotifications", Collections.singleton(RoutePolicy.ORIGIN), (view, message, sourceOrigin, isMainFrame, proxy) -> {
                 if (!isMainFrame || !RoutePolicy.officialOrigin(sourceOrigin.toString()) || !officialPage()) return;
                 replyProxy = proxy;
